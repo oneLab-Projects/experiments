@@ -40,7 +40,9 @@ class HomePage extends StatelessWidget {
           children: [
             Text(
               "oneLab Experiments",
-              style: Theme.of(context).textTheme.headline3,
+                  style: MediaQuery.of(context).size.width > 700
+                      ? Theme.of(context).textTheme.headline3
+                      : Theme.of(context).textTheme.headline4,
             ),
             Row(
               mainAxisSize: MainAxisSize.min,
