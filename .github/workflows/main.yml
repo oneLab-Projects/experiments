@@ -32,5 +32,6 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         key: ${{ secrets.SSH_KEY }}
         username: ${{ secrets.SSH_USERNAME }}
-        source: "build/web/**/*.*"
+        source: "build/web/**/*.*,build/web/*.*"
         target: "/data/nginx/static/experiments.onelab.work"
+        strip_components: 2
