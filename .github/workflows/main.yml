@@ -23,7 +23,7 @@ jobs:
       run: flutter pub get
 
     - name: "Build app"
-      run: flutter build web --release
+      run: flutter build web --release --dart-define=FLUTTER_WEB_USE_SKIA=true
 
     - name: "Deploy to server"
       uses: appleboy/scp-action@master
