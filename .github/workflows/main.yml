@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'dev'
+
+    - name: "Configure build"
+      run: flutter config --enable-web
+
+    - name: "Install dependencies"
+      run: flutter pub get
+
+    - name: "Build app"
+      run: flutter build web --release
+
+    - name: "Deploy to server"
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        port: ${{ secrets.SSH_PORT }}
+        key: ${{ secrets.SSH_KEY }}
+        source: "build/web/**/*.*"
+        target: "/data/nginx/static/experiments.onelab.work"
