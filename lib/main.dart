@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:pansy_ui/pansy_ui.dart';
 
 import 'component/routes.dart';
@@ -16,7 +14,6 @@ class App extends StatelessWidget {
       title: 'oneLab Experiments',
       theme: AppTheme.dayTheme,
       darkTheme: AppTheme.nightTheme,
-      themeMode: ThemeMode.light,
       routes: Routes.aliases,
       initialRoute: Routes.WELCOME,
     );
