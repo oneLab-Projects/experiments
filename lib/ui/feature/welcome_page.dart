@@ -46,7 +46,7 @@ class WelcomePage extends StatelessWidget {
         RaisedButton.icon(
           label: Text(
             "Explore",
-            style: Theme.of(context).accentTextTheme.bodyText1,
+            style: Theme.of(context).accentTextTheme.button,
           ),
           icon: Icon(
             MdiIcons.openInNew,
