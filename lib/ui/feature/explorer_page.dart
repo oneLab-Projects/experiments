@@ -12,7 +12,7 @@ class ExplorerPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(MdiIcons.whiteBalanceSunny),
-            onPressed: () {},
+            onPressed: () => ThemeProvider.of(context).toggleThemeMode(),
           )
         ],
       ),

@@ -9,6 +9,14 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(MdiIcons.whiteBalanceSunny),
+            onPressed: () => ThemeProvider.of(context).toggleThemeMode(),
+          )
+        ],
+      ),
       body: Stack(
         children: [
           Center(
@@ -36,8 +44,15 @@ class WelcomePage extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         RaisedButton.icon(
-          label: Text("Explore"),
-          icon: Icon(MdiIcons.openInNew, size: 16),
+          label: Text(
+            "Explore",
+            style: Theme.of(context).accentTextTheme.bodyText1,
+          ),
+          icon: Icon(
+            MdiIcons.openInNew,
+            size: 16,
+            color: Theme.of(context).accentIconTheme.color,
+          ),
           onPressed: () =>
               Navigator.pushReplacementNamed(context, Routes.EXPLORER),
         ),
