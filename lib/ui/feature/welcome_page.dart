@@ -59,8 +59,8 @@ class WelcomePage extends StatelessWidget {
         OutlineButton.icon(
           label: Text("Open in GitHub"),
           icon: Icon(MdiIcons.github, size: 16),
-          onPressed: () async => await launch(
-              "https://github.com/oneLab-Projects/onelab_experiments"),
+          onPressed: () async =>
+              await launch("https://github.com/oneLab-Projects/experiments"),
         ),
       ].separated(SizedBox(width: 10)),
     );
