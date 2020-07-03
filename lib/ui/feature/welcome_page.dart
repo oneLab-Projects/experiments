@@ -54,7 +54,7 @@ class WelcomePage extends StatelessWidget {
             color: Theme.of(context).accentIconTheme.color,
           ),
           onPressed: () =>
-              Navigator.pushReplacementNamed(context, Routes.EXPLORER),
+              Navigator.of(context).pushReplacementNamed(Routes.PROJECTS),
         ),
         OutlineButton.icon(
           label: Text("Open in GitHub"),

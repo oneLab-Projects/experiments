@@ -9,6 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^5.4.11
+  rest_router: ^0.1.0
 
   # ui
   pansy_ui:

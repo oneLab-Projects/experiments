@@ -14,8 +14,8 @@ class App extends StatelessWidget {
       title: 'oneLab Experiments',
       theme: AppTheme.dayTheme,
       darkTheme: AppTheme.nightTheme,
-      routes: Routes.aliases,
       initialRoute: Routes.WELCOME,
+      onGenerateRoute: Routes.router.generator,
     );
   }
 }
