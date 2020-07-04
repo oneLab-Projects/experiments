@@ -1,3 +1,4 @@
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:onelab_experiments/domain/entity/project.dart';
 import 'package:onelab_experiments/projects/projects.dart';
 import 'package:onelab_experiments/ui/feature/not_found_page.dart';
@@ -48,17 +49,155 @@ class _ProjectPageState extends State<ProjectPage> {
       );
 
     return Scaffold(
-      body: Column(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text("Project"),
+        actions: [
+          IconButton(
+            icon: Icon(MdiIcons.whiteBalanceSunny),
+            onPressed: () => ThemeProvider.of(context).toggleThemeMode(),
+          ),
+        ].separated(SizedBox(width: 2)),
+      ),
+      body: Stack(
         children: [
-          Text("id: ${_project.id}, name: ${_project.name},"
-              " description: ${_project.description},"
-              " type: ${_project.type},"
-              " developmentStatus: ${_project.developmentStatus},"
-              " initialSize: ${_project.initialSize}"),
-          SizedBox(height: 20),
-          source,
+          GridPaper(
+            color: Theme.of(context).canvasColor,
+            child: SizedBox.expand(),
+          ),
+          Row(
+            children: [
+              _buildDrawer(),
+              Spacer(),
+              source,
+              Spacer(),
+            ],
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Container(
+      decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          border: Border(
+              right: BorderSide(
+            color: Theme.of(context).dividerColor,
+          ))),
+      width: 350,
+      padding: EdgeInsets.symmetric(
+        vertical: 8,
+      ).copyWith(top: APPBAR_HEIGHT + 15),
+      child: _buildDrawerBody(),
+    );
+  }
+
+  Widget _buildDrawerBody() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildDrawerInformation(),
+        _buildDrawerProperties(),
+      ].separated(Divider(height: 40)),
+    );
+  }
+
+  Widget _buildDrawerInformation() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Information",
+            style: Theme.of(context).textTheme.overline.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          _buildTitleForWidget(
+            title: "Name",
+            widget: Text(
+              _project.name,
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          _buildTitleForWidget(
+            title: "Description",
+            widget: Text(
+              _project.description ?? "No description",
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          _buildTitleForWidget(
+            title: "Type",
+            widget: Text(
+              _project.type.toString().substring(12),
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          _buildTitleForWidget(
+            title: "Develompent status",
+            widget: Text(
+              _project.developmentStatus.toString().substring(18),
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+        ].separated(SizedBox(height: 15)),
+      ),
+    );
+  }
+
+  Widget _buildDrawerProperties() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Properties",
+            style: Theme.of(context).textTheme.overline.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          _buildTitleForWidget(
+            title: "width",
+            widget: Text(
+              _project.initialSize.width.toString(),
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+          _buildTitleForWidget(
+            title: "height",
+            widget: Text(
+              _project.initialSize.height.toString(),
+              style: Theme.of(context).textTheme.subtitle1,
+            ),
+          ),
+        ].separated(SizedBox(height: 15)),
+      ),
+    );
+  }
+
+  Widget _buildTitleForWidget({
+    @required String title,
+    @required Widget widget,
+  }) {
+    assert(title != null || widget != null);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.subtitle2.copyWith(
+              color:
+                  Theme.of(context).textTheme.subtitle2.color.withAlpha(150)),
+        ),
+        widget,
+      ].separated(SizedBox(height: 7)),
     );
   }
 }
