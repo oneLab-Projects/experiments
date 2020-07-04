@@ -46,12 +46,15 @@ class WelcomePage extends StatelessWidget {
         RaisedButton.icon(
           label: Text(
             "Explore",
-            style: Theme.of(context).accentTextTheme.button,
+            style: Theme.of(context)
+                .textTheme
+                .button
+                .copyWith(color: Colors.white),
           ),
           icon: Icon(
             MdiIcons.openInNew,
             size: 16,
-            color: Theme.of(context).accentIconTheme.color,
+            color: Colors.white,
           ),
           onPressed: () =>
               Navigator.of(context).pushReplacementNamed(Routes.PROJECTS),

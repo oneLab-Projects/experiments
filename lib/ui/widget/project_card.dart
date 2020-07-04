@@ -13,7 +13,6 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(10),
       child: InkWell(
         onTap: () =>
