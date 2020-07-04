@@ -21,4 +21,7 @@ class VideoPlayerProject implements Project {
 
   @override
   Widget source = VideoPlayer();
+
+  @override
+  InitialSize initialSize = InitialSize(100, 200);
 }
