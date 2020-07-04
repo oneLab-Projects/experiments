@@ -8,6 +8,7 @@ import 'package:rest_router/rest_navigator.dart';
 class Routes {
   static const String WELCOME = '/';
   static const String PROJECTS = '/projects';
+  static const String PROJECTS_2 = '/project';
   static const String PROJECT = '/project/:id';
 
   static String projectWithId(int id) => "/project/$id";
@@ -15,6 +16,7 @@ class Routes {
   static final router = Router({
     WELCOME: (BuildContext context, parameters) => WelcomePage(),
     PROJECTS: (BuildContext context, parameters) => ProjectsPage(),
+    PROJECTS_2: (BuildContext context, parameters) => ProjectsPage(),
     PROJECT: (BuildContext context, parameters) {
       var id = int.tryParse(parameters['id'].first);
 
