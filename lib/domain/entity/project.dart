@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart' show Widget;
 
-enum ProjectType { widget, page, app }
+enum ProjectType { widget, app }
 enum DevelopmentStatus { none, dev, beta, stable }
 
 abstract class Project {
