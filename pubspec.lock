@@ -91,7 +91,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: cc03edaf0077c62ac1c81a3645dc75c91096ef84
+      resolved-ref: e2e208b1b9adebb52eb894a4011dc073cb5c39c6
       url: "git://github.com/oneLab-Projects/pansy_ui.git"
     source: git
     version: "0.0.2"
