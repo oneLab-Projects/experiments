@@ -113,7 +113,7 @@ class _ProjectPageState extends State<ProjectPage> {
           Text(
             "Information",
             style: Theme.of(context).textTheme.overline.copyWith(
-                  fontSize: 12,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -159,7 +159,7 @@ class _ProjectPageState extends State<ProjectPage> {
           Text(
             "Properties",
             style: Theme.of(context).textTheme.overline.copyWith(
-                  fontSize: 12,
+                  fontSize: 13,
                   fontWeight: FontWeight.bold,
                 ),
           ),
