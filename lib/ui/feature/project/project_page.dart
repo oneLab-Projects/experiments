@@ -54,7 +54,6 @@ class _ProjectPageState extends State<ProjectPage> {
               " description: ${_project.description},"
               " type: ${_project.type},"
               " developmentStatus: ${_project.developmentStatus},"
-              " source: ${_project.source},"
               " initialSize: ${_project.initialSize}"),
           SizedBox(height: 20),
           source,
