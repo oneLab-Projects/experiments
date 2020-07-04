@@ -15,6 +15,8 @@ class ProjectPage extends StatefulWidget {
 class _ProjectPageState extends State<ProjectPage> {
   Project _project;
 
+  bool _showDrawer = false;
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +55,11 @@ class _ProjectPageState extends State<ProjectPage> {
       appBar: AppBar(
         title: Text("Project"),
         actions: [
+          if (MediaQuery.of(context).size.width < 1000)
+            IconButton(
+              icon: Icon(MdiIcons.textBox),
+              onPressed: () => _toggleDrawer(),
+            ),
           IconButton(
             icon: Icon(MdiIcons.whiteBalanceSunny),
             onPressed: () => ThemeProvider.of(context).toggleThemeMode(),
@@ -65,12 +72,29 @@ class _ProjectPageState extends State<ProjectPage> {
             color: Theme.of(context).canvasColor,
             child: SizedBox.expand(),
           ),
-          Row(
+          Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              _buildDrawer(),
-              Spacer(),
-              source,
-              Spacer(),
+              if (MediaQuery.of(context).size.width < 1000)
+                AnimatedContainer(
+                  duration: Duration(milliseconds: 200),
+                  curve: Curves.ease,
+                  height: _showDrawer
+                      ? MediaQuery.of(context).size.height / 3 > 400
+                          ? 400
+                          : MediaQuery.of(context).size.height / 3
+                      : 0,
+                  child: _buildDrawer(),
+                ),
+              Expanded(
+                child: Row(
+                  children: [
+                    if (MediaQuery.of(context).size.width >= 1000)
+                      _buildDrawer(),
+                    Expanded(child: Align(child: source)),
+                  ],
+                ),
+              ),
             ],
           ),
         ],
@@ -81,16 +105,28 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget _buildDrawer() {
     return Container(
       decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          border: Border(
-              right: BorderSide(
-            color: Theme.of(context).dividerColor,
-          ))),
-      width: 350,
-      padding: EdgeInsets.symmetric(
-        vertical: 8,
-      ).copyWith(top: APPBAR_HEIGHT + 15),
-      child: _buildDrawerBody(),
+        color: Theme.of(context).primaryColor,
+        border: MediaQuery.of(context).size.width < 1000
+            ? Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                ),
+              )
+            : Border(
+                right: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                ),
+              ),
+      ),
+      width: MediaQuery.of(context).size.width < 1000 ? double.infinity : 350,
+      height: MediaQuery.of(context).size.width < 1000 ? null : double.infinity,
+      padding: EdgeInsets.only(top: APPBAR_HEIGHT),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 15),
+          child: _buildDrawerBody(),
+        ),
+      ),
     );
   }
 
@@ -200,4 +236,6 @@ class _ProjectPageState extends State<ProjectPage> {
       ].separated(SizedBox(height: 7)),
     );
   }
+
+  void _toggleDrawer() => setState(() => _showDrawer = !_showDrawer);
 }
