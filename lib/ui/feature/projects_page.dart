@@ -3,6 +3,7 @@ import 'package:onelab_experiments/domain/entity/project.dart';
 import 'package:onelab_experiments/projects/projects.dart';
 import 'package:onelab_experiments/ui/widget/widgets.dart';
 import 'package:pansy_ui/pansy_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({Key key}) : super(key: key);
@@ -27,10 +28,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
         title: Text("oneLab Experiments"),
         actions: [
           IconButton(
+            icon: Icon(MdiIcons.github),
+            onPressed: () async =>
+                await launch("https://github.com/oneLab-Projects/experiments"),
+          ),
+          IconButton(
             icon: Icon(MdiIcons.whiteBalanceSunny),
             onPressed: () => ThemeProvider.of(context).toggleThemeMode(),
-          )
-        ],
+          ),
+        ].separated(SizedBox(width: 2)),
       ),
       body: _buildProjects(),
     );
