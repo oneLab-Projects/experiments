@@ -15,8 +15,12 @@ class Routes {
   static final router = Router({
     WELCOME: (BuildContext context, parameters) => WelcomePage(),
     PROJECTS: (BuildContext context, parameters) => ProjectsPage(),
-    PROJECT: (BuildContext context, parameters) =>
-        ProjectPage(id: int.tryParse(parameters['id'].first)),
+    PROJECT: (BuildContext context, parameters) {
+      var id = int.tryParse(parameters['id'].first);
+
+      if (id == null) return ProjectsPage();
+      return ProjectPage(id: id);
+    },
   },
       onUnknownRouteHandler: (BuildContext context, parameters) =>
           NotFoundPage());
