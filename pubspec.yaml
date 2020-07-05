@@ -10,12 +10,14 @@ dependencies:
     sdk: flutter
   url_launcher: ^5.4.11
   rest_router: ^0.1.0
+  video_player: ^0.10.11+2
 
   # ui
   pansy_ui:
     git: git://github.com/oneLab-Projects/pansy_ui.git
   flutter_brand_icons: ^1.1.0
   material_design_icons_flutter: ^4.0.5345
+  percent_indicator: ^2.1.5
 
 dev_dependencies:
   flutter_test:
