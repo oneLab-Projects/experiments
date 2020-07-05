@@ -11,7 +11,9 @@ class VideoPlayerProject implements Project {
   String name = "Video Player";
 
   @override
-  String description;
+  String description =
+      "This is a simple player for playing videos, with the ability"
+      " to control the playback status and track progress.";
 
   @override
   ProjectType type = ProjectType.widget;
