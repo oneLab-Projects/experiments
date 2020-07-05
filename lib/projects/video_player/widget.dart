@@ -72,6 +72,12 @@ class _VideoPlayerState extends State<VideoPlayer> {
         child: Stack(
           children: [
             v.VideoPlayer(_controller),
+            AnimatedOpacity(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.ease,
+              opacity: _played ? 0 : 1,
+              child: Container(color: Colors.black26),
+            ),
             _buildControls(progressIndicator),
             GestureDetector(onTap: _toggleVideoPlayer),
           ],

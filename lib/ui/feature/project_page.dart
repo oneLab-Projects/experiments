@@ -158,7 +158,8 @@ class _ProjectPageState extends State<ProjectPage> {
             _project.description ?? "No description",
             style: Theme.of(context).textTheme.subtitle2.copyWith(
                 color:
-                    Theme.of(context).textTheme.subtitle2.color.withAlpha(150)),
+                    Theme.of(context).textTheme.subtitle2.color.withAlpha(150),
+                height: 1.6),
           ),
         ].separated(SizedBox(height: 8)),
       ),
