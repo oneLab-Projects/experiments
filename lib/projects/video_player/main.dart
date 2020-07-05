@@ -20,8 +20,11 @@ class VideoPlayerProject implements Project {
   DevelopmentStatus developmentStatus = DevelopmentStatus.dev;
 
   @override
-  Widget source = VideoPlayer();
+  Widget source = VideoPlayer(
+    url:
+        "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+  );
 
   @override
-  InitialSize initialSize = InitialSize(100, 200);
+  InitialSize initialSize = InitialSize(355, 200);
 }
