@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart' show Widget;
 
-enum ProjectType { widget, app }
+enum ProjectType { widget, full, app }
 enum DevelopmentStatus { none, dev, beta, stable }
 
 class InitialSize {

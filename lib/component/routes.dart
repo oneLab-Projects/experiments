@@ -1,5 +1,5 @@
 import 'package:onelab_experiments/ui/feature/not_found_page.dart';
-import 'package:onelab_experiments/ui/feature/project/project_page.dart';
+import 'package:onelab_experiments/ui/feature/project_page.dart';
 import 'package:onelab_experiments/ui/feature/projects_page.dart';
 import 'package:onelab_experiments/ui/feature/welcome_page.dart';
 import 'package:pansy_ui/pansy_ui.dart';

@@ -33,11 +33,14 @@ class _ProjectPageState extends State<ProjectPage> {
     switch (_project.type) {
       case ProjectType.widget:
         return _buildWidgetView();
+      case ProjectType.full:
+        return _project.source;
+        break;
       case ProjectType.app:
         return _project.source;
-      default:
-        return null;
     }
+
+    return null;
   }
 
   Widget _buildWidgetView() {
@@ -118,7 +121,7 @@ class _ProjectPageState extends State<ProjectPage> {
                 ),
               ),
       ),
-      width: MediaQuery.of(context).size.width < 1000 ? double.infinity : 350,
+      width: MediaQuery.of(context).size.width < 1000 ? double.infinity : 300,
       height: MediaQuery.of(context).size.width < 1000 ? null : double.infinity,
       padding: EdgeInsets.only(top: APPBAR_HEIGHT),
       child: SingleChildScrollView(
@@ -134,9 +137,31 @@ class _ProjectPageState extends State<ProjectPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        _buildDrawerTitle(),
         _buildDrawerInformation(),
         _buildDrawerProperties(),
       ].separated(Divider(height: 40)),
+    );
+  }
+
+  Widget _buildDrawerTitle() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _project.name,
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Text(
+            _project.description ?? "No description",
+            style: Theme.of(context).textTheme.subtitle2.copyWith(
+                color:
+                    Theme.of(context).textTheme.subtitle2.color.withAlpha(150)),
+          ),
+        ].separated(SizedBox(height: 8)),
+      ),
     );
   }
 
@@ -146,39 +171,19 @@ class _ProjectPageState extends State<ProjectPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Information",
-            style: Theme.of(context).textTheme.overline.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          _buildTitleForWidget(
-            title: "Name",
-            widget: Text(
-              _project.name,
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ),
-          _buildTitleForWidget(
-            title: "Description",
-            widget: Text(
-              _project.description ?? "No description",
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ),
+          _buildTitle("Information"),
           _buildTitleForWidget(
             title: "Type",
             widget: Text(
               _project.type.toString().substring(12),
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.subtitle2,
             ),
           ),
           _buildTitleForWidget(
             title: "Develompent status",
             widget: Text(
               _project.developmentStatus.toString().substring(18),
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.subtitle2,
             ),
           ),
         ].separated(SizedBox(height: 15)),
@@ -192,28 +197,35 @@ class _ProjectPageState extends State<ProjectPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Properties",
-            style: Theme.of(context).textTheme.overline.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
+          _buildTitle("Properties"),
           _buildTitleForWidget(
             title: "width",
             widget: Text(
               _project.initialSize.width.toString(),
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.subtitle2,
             ),
           ),
           _buildTitleForWidget(
             title: "height",
             widget: Text(
               _project.initialSize.height.toString(),
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.subtitle2,
             ),
           ),
         ].separated(SizedBox(height: 15)),
+      ),
+    );
+  }
+
+  Widget _buildTitle(String title) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 2),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.subtitle1.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+            ),
       ),
     );
   }
@@ -223,8 +235,8 @@ class _ProjectPageState extends State<ProjectPage> {
     @required Widget widget,
   }) {
     assert(title != null || widget != null);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title,
