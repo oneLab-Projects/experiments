@@ -75,8 +75,7 @@ class _MoveViewState extends State<MoveView> with SingleTickerProviderStateMixin
   void onScaleStart(ScaleStartDetails details) {
     // NOTE: DEBUG
     print("start");
-
-    this.controller.stop();
+    this.controller.reset();
     
     if (this.widget.enableTranslate) {
       this.transformStart = _vectorFrom(details.focalPoint);
