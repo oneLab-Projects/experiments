@@ -2,9 +2,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pansy_ui/pansy_ui.dart';
 import 'package:vector_math/vector_math_64.dart' as vec;
+import 'package:flutter/animation.dart';
 
-class MoveView extends StatefulWidget
-{
+class MoveView extends StatefulWidget {
   final Widget child;
   final bool enableTranslate;
   final bool enableZoom;
@@ -22,25 +22,47 @@ class MoveView extends StatefulWidget
   _MoveViewState createState() => _MoveViewState();
 }
 
-class _MoveViewState extends State<MoveView>
-{
+class _MoveViewState extends State<MoveView> with SingleTickerProviderStateMixin {
   double scaleStart;
   vec.Vector3 transformStart;
 
   Matrix4 matrix4 = Matrix4.identity();
+  Matrix4 animatedMatrix4 = Matrix4.identity();
+
+  Matrix4Tween animation;
+  AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      duration: Duration(milliseconds: 250), 
+      vsync: this
+    );
+
+    this.animation = new Matrix4Tween(begin: this.animatedMatrix4, end: Matrix4.identity());
+    animation.animate(controller)
+      ..addListener(() {
+        setState(() { 
+          this.matrix4 = this.animation.evaluate(this.controller);
+        }); 
+        // NOTE: DEBUG
+        print(this.matrix4);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onScaleStart: this.onScaleStart,
       onScaleUpdate: this.onScaleUpdate,
+      onScaleEnd: this.onScaleEnd,
       child: ClipRRect(
         child: Container(
           color: Colors.transparent,
-          child: Transform(
-            transform: this.matrix4,
-            child: this.widget.child
-          )
+          transform: this.matrix4,
+          child: this.widget.child
         )
       )
     );
@@ -51,17 +73,33 @@ class _MoveViewState extends State<MoveView>
   }
 
   void onScaleStart(ScaleStartDetails details) {
-    if (this.widget.enableTranslate)
+    // NOTE: DEBUG
+    print("start");
+
+    this.controller.stop();
+    
+    if (this.widget.enableTranslate) {
       this.transformStart = _vectorFrom(details.focalPoint);
+    }
     if (this.widget.enableZoom)
       this.scaleStart = 1.000;
   }
 
   void onScaleUpdate(ScaleUpdateDetails details) {
+    // NOTE: DEBUG
+    print("upd");
+
     if (this.widget.enableTranslate)
       this.calculateTranslate(details.focalPoint);
     if (this.widget.enableZoom && details.scale != 1) 
       this.calculateScale(details.scale);
+
+    // NOTE: DEBUG
+    print(this.matrix4);
+  }
+
+  void onScaleEnd(ScaleEndDetails details) {
+    this.controller.forward(from: 0.0);
   }
 
   void calculateTranslate(Offset offset) {
@@ -77,7 +115,7 @@ class _MoveViewState extends State<MoveView>
   void calculateScale(double scale) {
     
     setState(() {
-      this.matrix4.scale(scale - this.scaleStart);
+      this.matrix4.scale(scale / this.scaleStart);
     });
 
     this.scaleStart = scale;
