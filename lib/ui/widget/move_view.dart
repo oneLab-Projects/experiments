@@ -6,14 +6,14 @@ import 'package:vector_math/vector_math_64.dart' as vec;
 class MoveView extends StatefulWidget
 {
   final Widget child;
-  final bool enableTransform;
+  final bool enableTranslate;
   final bool enableZoom;
   final bool enableReverseToRoot;
 
   const MoveView({
     Key key,
     @required this.child,
-    this.enableTransform = true,
+    this.enableTranslate = true,
     this.enableZoom = true,
     this.enableReverseToRoot = true,
   }) : super(key: key);
@@ -51,14 +51,14 @@ class _MoveViewState extends State<MoveView>
   }
 
   void onScaleStart(ScaleStartDetails details) {
-    if (this.widget.enableTransform)
+    if (this.widget.enableTranslate)
       this.transformStart = _vectorFrom(details.focalPoint);
     if (this.widget.enableZoom)
       this.scaleStart = 1.000;
   }
 
   void onScaleUpdate(ScaleUpdateDetails details) {
-    if (this.widget.enableTransform)
+    if (this.widget.enableTranslate)
       this.calculateTranslate(details.focalPoint);
     if (this.widget.enableZoom && details.scale != 1) 
       this.calculateScale(details.scale);
