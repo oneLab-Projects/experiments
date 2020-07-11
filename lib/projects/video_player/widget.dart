@@ -58,8 +58,16 @@ class _VideoPlayerState extends State<VideoPlayer> {
         backgroundColor: Colors.white24,
       );
     } else {
-      progressIndicator = CircularProgressIndicator(
-        value: null,
+      progressIndicator = CircularPercentIndicator(
+        animation: true,
+        animationDuration: 7000,
+        curve: Curves.ease,
+        radius: 20,
+        lineWidth: 3,
+        percent: 1,
+        circularStrokeCap: CircularStrokeCap.round,
+        progressColor: Colors.white,
+        backgroundColor: Colors.white24,
       );
     }
 
