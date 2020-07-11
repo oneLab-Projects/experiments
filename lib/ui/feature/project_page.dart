@@ -2,6 +2,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:onelab_experiments/domain/entity/project.dart';
 import 'package:onelab_experiments/projects/projects.dart';
 import 'package:onelab_experiments/ui/feature/not_found_page.dart';
+import 'package:onelab_experiments/ui/widget/move_view.dart';
 import 'package:pansy_ui/pansy_ui.dart';
 
 class ProjectPage extends StatefulWidget {
@@ -14,7 +15,6 @@ class ProjectPage extends StatefulWidget {
 
 class _ProjectPageState extends State<ProjectPage> {
   Project _project;
-
   bool _showDrawer = false;
 
   @override
@@ -69,38 +69,42 @@ class _ProjectPageState extends State<ProjectPage> {
           ),
         ].separated(SizedBox(width: 2)),
       ),
-      body: Stack(
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          GridPaper(
-            color: Theme.of(context).canvasColor,
-            child: SizedBox.expand(),
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (MediaQuery.of(context).size.width < 1000)
-                AnimatedContainer(
-                  duration: Duration(milliseconds: 200),
-                  curve: Curves.ease,
-                  height: _showDrawer
-                      ? MediaQuery.of(context).size.height / 3 > 400
-                          ? 400
-                          : MediaQuery.of(context).size.height / 3
-                      : 0,
-                  child: _buildDrawer(),
-                ),
-              Expanded(
-                child: Row(
-                  children: [
-                    if (MediaQuery.of(context).size.width >= 1000)
-                      _buildDrawer(),
-                    Expanded(child: Align(child: source)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+          if (MediaQuery.of(context).size.width < 1000)
+            AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              curve: Curves.ease,
+              height: _showDrawer
+                  ? MediaQuery.of(context).size.height / 3 > 400
+                      ? 400
+                      : MediaQuery.of(context).size.height / 3
+                  : 0,
+              child: _buildDrawer(),
+            ),
+          Expanded(
+            child: Row(
+              children: [
+                if (MediaQuery.of(context).size.width >= 1000)
+                  _buildDrawer(),
+                Expanded(
+                  child: MoveView(
+                    child: Stack(
+                      children: [
+                        GridPaper(
+                          color: Theme.of(context).canvasColor,
+                          child: SizedBox.expand(),
+                        ),
+                        Align(child: source)
+                      ]
+                    )
+                  )
+                )
+              ]
+            )
+          )
+        ]
       ),
     );
   }
