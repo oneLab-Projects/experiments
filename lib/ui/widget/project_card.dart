@@ -13,6 +13,7 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      clipBehavior: Clip.antiAlias,
       borderRadius: BorderRadius.circular(10),
       child: InkWell(
         onTap: () =>
@@ -23,10 +24,18 @@ class ProjectCard extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(project.name),
-                Text(project.developmentStatus.toString().substring(18)),
-                Text(project.type.toString().substring(12)),
-              ],
+                Text(
+                  project.name,
+                  style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        color: Theme.of(context)
+                            .textTheme
+                            .subtitle2
+                            .color
+                            .withAlpha(250),
+                        fontSize: 16,
+                      ),
+                ),
+              ].separated(SizedBox(height: 3)),
             ),
           ],
         ),
