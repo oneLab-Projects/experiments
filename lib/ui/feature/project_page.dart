@@ -2,7 +2,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:onelab_experiments/domain/entity/project.dart';
 import 'package:onelab_experiments/projects/projects.dart';
 import 'package:onelab_experiments/ui/feature/not_found_page.dart';
-import 'package:onelab_experiments/ui/widget/move_view.dart';
 import 'package:pansy_ui/pansy_ui.dart';
 
 class ProjectPage extends StatefulWidget {
@@ -14,12 +13,16 @@ class ProjectPage extends StatefulWidget {
 }
 
 class _ProjectPageState extends State<ProjectPage> {
+  TransformationController _transformationController;
+
   Project _project;
   bool _showDrawer = false;
 
   @override
   void initState() {
     super.initState();
+
+    _transformationController = TransformationController();
     _project = getProjects().firstWhere(
       (element) => element.id == widget.id,
       orElse: () => null,
@@ -86,25 +89,26 @@ class _ProjectPageState extends State<ProjectPage> {
           Expanded(
             child: Row(
               children: [
-                if (MediaQuery.of(context).size.width >= 1000)
-                  _buildDrawer(),
+                if (MediaQuery.of(context).size.width >= 1000) _buildDrawer(),
                 Expanded(
-                  child: MoveView(
+                  child: InteractiveViewer(
+                    transformationController: TransformationController(),
                     child: Stack(
+                      alignment: Alignment.center,
                       children: [
                         GridPaper(
                           color: Theme.of(context).canvasColor,
                           child: SizedBox.expand(),
                         ),
-                        Align(child: source)
-                      ]
-                    )
-                  )
-                )
-              ]
-            )
-          )
-        ]
+                        source
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
