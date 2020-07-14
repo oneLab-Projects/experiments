@@ -91,24 +91,30 @@ class _ProjectPageState extends State<ProjectPage> {
               children: [
                 if (MediaQuery.of(context).size.width >= 1000) _buildDrawer(),
                 Expanded(
-                  child: InteractiveViewer(
-                    transformationController: TransformationController(),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        GridPaper(
-                          color: Theme.of(context).canvasColor,
-                          child: SizedBox.expand(),
-                        ),
-                        source
-                      ],
-                    ),
-                  ),
+                  child: _buildWidgetViewer(source),
                 ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildWidgetViewer(Widget source) {
+    return ClipRRect(
+      child: InteractiveViewer(
+        transformationController: _transformationController,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            GridPaper(
+              color: Theme.of(context).canvasColor,
+              child: SizedBox.expand(),
+            ),
+            source
+          ],
+        ),
       ),
     );
   }
@@ -146,7 +152,7 @@ class _ProjectPageState extends State<ProjectPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildDrawerTitle(),
-        _buildDrawerInformation(),
+        _buildDrawerContributors(),
         _buildDrawerProperties(),
       ].separated(Divider(height: 40)),
     );
@@ -158,44 +164,96 @@ class _ProjectPageState extends State<ProjectPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            _project.name,
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          Text(
-            _project.description ?? "No description",
-            style: Theme.of(context).textTheme.subtitle2.copyWith(
-                color:
-                    Theme.of(context).textTheme.subtitle2.color.withAlpha(150),
-                height: 1.6),
-          ),
+          _buildWidgetTitle(),
+          _buildWidgetDescription(),
+          _buildWidgetTags(),
         ].separated(SizedBox(height: 8)),
       ),
     );
   }
 
-  Widget _buildDrawerInformation() {
+  Widget _buildWidgetTitle() {
+    return Text(
+      _project.name,
+      style: Theme.of(context).textTheme.headline6.copyWith(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+    );
+  }
+
+  Widget _buildWidgetDescription() {
+    return Text(
+      _project.description ?? "No description",
+      style: Theme.of(context).textTheme.subtitle2.copyWith(
+          color: Theme.of(context).textTheme.subtitle2.color.withAlpha(150),
+          height: 1.6),
+    );
+  }
+
+  Widget _buildWidgetTags() {
+    return SizedBox(
+      height: 41,
+      child: Transform.scale(
+        alignment: Alignment.centerLeft,
+        scale: 0.9,
+        child: Wrap(
+          children: [
+            Chip(
+              label: Text(
+                _project.developmentStatus.toString().substring(18),
+              ),
+            ),
+            Chip(
+              label: Text(_project.type.toString().substring(12)),
+            ),
+          ].separated(SizedBox(width: 5)),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDrawerContributors() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitle("Information"),
-          _buildTitleForWidget(
-            title: "Type",
-            widget: Text(
-              _project.type.toString().substring(12),
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
+          _buildTitle("Contributors"),
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.black38,
+                backgroundImage: NetworkImage(
+                  "https://avatars0.githubusercontent.com/u/25152332?s=460&v=4",
+                ),
+                radius: 16,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Semyon Butenko",
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  Text(
+                    "Laim0n",
+                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyText2
+                            .color
+                            .withAlpha(150),
+                        fontSize: 12),
+                  ),
+                ].separated(SizedBox(height: 5)),
+              ),
+            ].separated(SizedBox(width: 12)),
           ),
-          _buildTitleForWidget(
-            title: "Develompent status",
-            widget: Text(
-              _project.developmentStatus.toString().substring(18),
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
-          ),
-        ].separated(SizedBox(height: 15)),
+        ].separated(SizedBox(height: 20)),
       ),
     );
   }
