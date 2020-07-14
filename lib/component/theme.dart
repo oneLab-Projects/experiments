@@ -18,6 +18,25 @@ class AppTheme {
     scaffoldBackgroundColor: Colors.grey[50],
     buttonColor: Colors.grey[800],
     dividerColor: Color(0x10000000),
+    chipTheme: ChipThemeData(
+      backgroundColor: Colors.transparent,
+      brightness: Brightness.light,
+      disabledColor: Colors.red,
+      labelStyle: TextStyle(
+        color: Colors.black87,
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+      ),
+      padding: EdgeInsets.all(4),
+      secondaryLabelStyle: TextStyle(),
+      secondarySelectedColor: Colors.green,
+      selectedColor: Colors.orange,
+      shape: StadiumBorder(
+          side: BorderSide(
+        width: 1,
+        color: Colors.black.withAlpha(15),
+      )),
+    ),
   );
 
   static ThemeData nightTheme = ThemeData(
@@ -36,6 +55,25 @@ class AppTheme {
       thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
       overlayColor: Colors.white12,
       overlayShape: RoundSliderOverlayShape(overlayRadius: 20),
+    ),
+    chipTheme: ChipThemeData(
+      backgroundColor: Colors.white.withAlpha(5),
+      brightness: Brightness.dark,
+      disabledColor: Colors.red,
+      labelStyle: TextStyle(
+        color: Colors.white70,
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
+      ),
+      padding: EdgeInsets.all(4),
+      secondaryLabelStyle: TextStyle(),
+      secondarySelectedColor: Colors.green,
+      selectedColor: Colors.orange,
+      shape: StadiumBorder(
+          side: BorderSide(
+        width: 1,
+        color: Colors.white.withAlpha(15),
+      )),
     ),
   );
 }
