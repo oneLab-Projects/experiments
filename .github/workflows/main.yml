@@ -1,37 +1,37 @@
-name: CI
+name: Build web
 
 on:
   push:
-    branches: [master]
+    branches: [stable]
   pull_request:
-    branches: [master]
+    branches: [stable]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - uses: subosito/flutter-action@v1
-      with:
-        channel: 'dev'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "master"
 
-    - name: "Configure build"
-      run: flutter config --enable-web
+      - name: "Configure build"
+        run: flutter config --enable-web
 
-    - name: "Install dependencies"
-      run: flutter pub get
+      - name: "Install dependencies"
+        run: flutter pub get
 
-    - name: "Build app"
-      run: flutter build web #--release --dart-define=FLUTTER_WEB_USE_SKIA=true
+      - name: "Build app"
+        run: flutter build web #--release --dart-define=FLUTTER_WEB_USE_SKIA=true
 
-    - name: "Deploy to server"
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        port: ${{ secrets.SSH_PORT }}
-        key: ${{ secrets.SSH_KEY }}
-        username: ${{ secrets.SSH_USERNAME }}
-        source: "build/web"
-        target: "/data/nginx/static/experiments.onelab.work"
-        strip_components: 2
+      - name: "Deploy to server"
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          source: "build/web"
+          target: "/data/nginx/static/experiments.onelab.work"
+          strip_components: 2
