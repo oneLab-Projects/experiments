@@ -18,4 +18,11 @@ class GithubApiClient extends ApiClient
       throw "Fuck GitHub!";
     return GithubUser.fromJson(jsonDecode(result.body));
   }
+
+  Future<List<GithubUser>> getUsersFromID(List<int> idList) async {
+    List<GithubUser> users = List<GithubUser>();
+    for (int id in idList)
+      users.add(await this.getUserFromID(id));
+    return users;
+  }
 } 
