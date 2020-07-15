@@ -19,7 +19,7 @@ class GithubApiClient extends ApiClient
     return GithubUser.fromJson(jsonDecode(result.body));
   }
 
-  Future<List<GithubUser>> getUsersByID(List<int> idList) async {
+  Future<List<GithubUser>> getUsersByIDs(List<int> idList) async {
     List<GithubUser> users = List<GithubUser>();
     await Future.forEach(
       idList, 
