@@ -1,8 +1,5 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:onelab_experiments/api/github_user.dart';
-
 import 'api_client.dart';
 import 'package:http/http.dart' as http;
 
