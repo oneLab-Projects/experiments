@@ -21,8 +21,10 @@ class GithubApiClient extends ApiClient
 
   Future<List<GithubUser>> getUsersFromID(List<int> idList) async {
     List<GithubUser> users = List<GithubUser>();
-    for (int id in idList)
-      users.add(await this.getUserFromID(id));
+    await Future.forEach(
+      idList, 
+      (id) async => users.add(await getUserFromID(id))
+    );
     return users;
   }
 } 
