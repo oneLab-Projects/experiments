@@ -11,6 +11,7 @@ dependencies:
   url_launcher: ^5.4.11
   rest_router: ^0.1.0
   video_player: ^0.10.11+2
+  http: ^0.12.1
 
   # ui
   pansy_ui:
