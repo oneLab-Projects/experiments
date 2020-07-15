@@ -19,5 +19,5 @@ class GithubApiClient extends ApiClient
   }
 
   Future<List<GithubUser>> getUsersByIDs(List<int> ids) async
-    => await Future.wait(ids.map((id) => getUserByID(id)));
+    => await Future.wait(ids.map(getUserByID));
 } 
