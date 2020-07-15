@@ -16,6 +16,9 @@ class VideoPlayerProject implements Project {
       " to control the playback status and track progress.";
 
   @override
+  List<int> contributorIds = [25152332];
+
+  @override
   ProjectType type = ProjectType.widget;
 
   @override

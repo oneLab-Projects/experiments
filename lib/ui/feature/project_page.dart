@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:onelab_experiments/api/github_api.dart';
+import 'package:onelab_experiments/api/github_user.dart';
 import 'package:onelab_experiments/domain/entity/project.dart';
 import 'package:onelab_experiments/projects/projects.dart';
 import 'package:onelab_experiments/ui/feature/not_found_page.dart';
@@ -16,6 +19,7 @@ class _ProjectPageState extends State<ProjectPage> {
   TransformationController _transformationController;
 
   Project _project;
+  List<GithubUser> _contributors;
   bool _showDrawer = false;
 
   @override
@@ -27,6 +31,14 @@ class _ProjectPageState extends State<ProjectPage> {
       (element) => element.id == widget.id,
       orElse: () => null,
     );
+
+    if (_project != null && _project.contributorIds.length > 0) {
+      GithubApiClient()
+          .getUsersByIDs(
+            _project.contributorIds,
+          )
+          .then((value) => setState(() => _contributors = value));
+    }
   }
 
   @override
@@ -152,7 +164,7 @@ class _ProjectPageState extends State<ProjectPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildDrawerTitle(),
-        _buildDrawerContributors(),
+        if (_project.contributorIds.length > 0) _buildDrawerContributors(),
         _buildDrawerProperties(),
       ].separated(Divider(height: 40)),
     );
@@ -219,42 +231,58 @@ class _ProjectPageState extends State<ProjectPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitle("Contributors"),
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.black38,
-                backgroundImage: NetworkImage(
-                  "https://avatars0.githubusercontent.com/u/25152332?s=460&v=4",
-                ),
-                radius: 16,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Semyon Butenko",
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                  ),
-                  Text(
-                    "Laim0n",
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyText2
-                            .color
-                            .withAlpha(150),
-                        fontSize: 12),
-                  ),
-                ].separated(SizedBox(height: 5)),
-              ),
-            ].separated(SizedBox(width: 12)),
-          ),
-        ].separated(SizedBox(height: 20)),
+              _buildTitle("Contributors"),
+              SizedBox(height: 20),
+            ] +
+            (_contributors != null
+                ? List<Widget>.generate(
+                    _contributors.length,
+                    (index) {
+                      final contributor = _contributors[index];
+                      return _buildWidgetContributionsItem(contributor);
+                    },
+                  ).separated(SizedBox(height: 20))
+                : [
+                    Center(child: CupertinoActivityIndicator()),
+                  ]),
       ),
+    );
+  }
+
+  Widget _buildWidgetContributionsItem(GithubUser contributor) {
+    return Row(
+      children: [
+        CircleAvatar(
+          backgroundColor: Colors.black12,
+          backgroundImage: NetworkImage(
+            contributor.avatar.toString(),
+          ),
+          radius: 16,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              contributor.name ?? contributor.nickname,
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+            if (contributor.name != null)
+              Text(
+                contributor.nickname,
+                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .color
+                        .withAlpha(150),
+                    fontSize: 12),
+              ),
+          ].separated(SizedBox(height: 5)),
+        ),
+      ].separated(SizedBox(width: 12)),
     );
   }
 
