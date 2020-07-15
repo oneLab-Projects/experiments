@@ -15,6 +15,7 @@ abstract class Project {
   int id;
   String name;
   String description;
+  List<int> contributorIds;
   ProjectType type;
   DevelopmentStatus developmentStatus;
   Widget source;
