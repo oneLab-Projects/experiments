@@ -6,14 +6,14 @@ import 'package:rest_router/rest_navigator.dart';
 import 'page_route.dart';
 
 /// Builder function with [parameters].
-typedef Widget HandlerFunc(
+typedef HandlerFunc = Widget Function(
     BuildContext context, Map<String, List<String>> parameters);
 
 class Router {
-  static final unknownRoute = "__UKNOWN_ROUTE__";
+  static final unknownRoute = '__UKNOWN_ROUTE__';
 
   /// Path with variables -> widget builders
-  /// eg. {"days/:day": (BuildContext context, Map<String, List<String>> parameters) => Container()}
+  /// eg. {'days/:day': (BuildContext context, Map<String, List<String>> parameters) => Container()}
   final Map<String, HandlerFunc> pathHandlers;
 
   /// Builder for unknown route
@@ -26,7 +26,7 @@ class Router {
   /// Helper to find a single path handler with matching path parameters.
   bool _matchPathHandler(List<String> parts, String handlerPath) {
     // Sections of handler URL separated by slashes
-    final handlerParts = handlerPath.split("/");
+    final handlerParts = handlerPath.split('/');
 
     // Must have same number of parts
     if (parts.length != handlerParts.length) {
@@ -34,9 +34,9 @@ class Router {
     }
 
     // Lockstep
-    for (int i = 0; i < parts.length; i++) {
+    for (var i = 0; i < parts.length; i++) {
       // Non-variable parts must match
-      if (!handlerParts[i].startsWith(":") && parts[i] != handlerParts[i]) {
+      if (!handlerParts[i].startsWith(':') && parts[i] != handlerParts[i]) {
         return false;
       }
     }
@@ -54,7 +54,7 @@ class Router {
         routeSettings.arguments as TransitionType ?? TransitionType.none;
 
     // Sections of URL separated by slashes
-    final parts = routeSettings.name.split("/");
+    final parts = routeSettings.name.split('/');
 
     // Find corresponding path handler
     // Fails if multiple handlers found
@@ -85,7 +85,7 @@ class Router {
         );
         break;
       default:
-        throw UnimplementedError("Invalid transition type: $transitionType");
+        throw UnimplementedError('Invalid transition type: $transitionType');
     }
   }
 }

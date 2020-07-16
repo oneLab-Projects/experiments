@@ -9,7 +9,7 @@ class NotFoundPage extends StatelessWidget {
     return Scaffold(
       body: Draggable(
           child: Text(
-        "404",
+        '404',
         style: Theme.of(context)
             .textTheme
             .headline1

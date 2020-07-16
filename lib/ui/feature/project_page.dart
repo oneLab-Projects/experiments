@@ -34,8 +34,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_project == null) 
-      return NotFoundPage();
+    if (_project == null) return NotFoundPage();
 
     switch (_project.type) {
       case ProjectType.widget:
@@ -51,19 +50,20 @@ class _ProjectPageState extends State<ProjectPage> {
   }
 
   Widget _buildWidgetView() {
-    Widget source = _project.source;
+    var source = _project.source;
 
-    if (_project.initialSize != null)
+    if (_project.initialSize != null) {
       source = SizedBox(
         width: _project.initialSize.width,
         height: _project.initialSize.height,
         child: _project.source,
       );
+    }
 
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text("Project"),
+        title: Text('Project'),
         actions: [
           if (MediaQuery.of(context).size.width < 1000)
             IconButton(
@@ -84,10 +84,10 @@ class _ProjectPageState extends State<ProjectPage> {
               duration: Duration(milliseconds: 200),
               curve: Curves.ease,
               height: _showDrawer
-                ? MediaQuery.of(context).size.height / 3 > 400
-                  ? 400
-                  : MediaQuery.of(context).size.height / 3
-                : 0,
+                  ? MediaQuery.of(context).size.height / 3 > 400
+                      ? 400
+                      : MediaQuery.of(context).size.height / 3
+                  : 0,
               child: _buildDrawer(),
             ),
           Expanded(
@@ -128,16 +128,12 @@ class _ProjectPageState extends State<ProjectPage> {
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         border: MediaQuery.of(context).size.width < 1000
-          ? Border(
-              bottom: BorderSide(
-                color: Theme.of(context).dividerColor,
+            ? Border(
+                bottom: BorderSide(color: Theme.of(context).dividerColor),
+              )
+            : Border(
+                right: BorderSide(color: Theme.of(context).dividerColor),
               ),
-            )
-          : Border(
-              right: BorderSide(
-                color: Theme.of(context).dividerColor,
-              ),
-            ),
       ),
       width: MediaQuery.of(context).size.width < 1000 ? double.infinity : 300,
       height: MediaQuery.of(context).size.width < 1000 ? null : double.infinity,
@@ -156,7 +152,7 @@ class _ProjectPageState extends State<ProjectPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildDrawerTitle(),
-        if (_project.contributorIds.length > 0) _buildDrawerContributors(),
+        if (_project.contributorIds.isNotEmpty) _buildDrawerContributors(),
         _buildDrawerProperties(),
       ].separated(Divider(height: 40)),
     );
@@ -180,19 +176,18 @@ class _ProjectPageState extends State<ProjectPage> {
     return Text(
       _project.name,
       style: Theme.of(context).textTheme.headline6.copyWith(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-      ),
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
     );
   }
 
   Widget _buildWidgetDescription() {
     return Text(
-      _project.description ?? "No description",
+      _project.description ?? 'No description',
       style: Theme.of(context).textTheme.subtitle2.copyWith(
-        color: Theme.of(context).textTheme.subtitle2.color.withAlpha(150),
-        height: 1.6
-      ),
+          color: Theme.of(context).textTheme.subtitle2.color.withAlpha(150),
+          height: 1.6),
     );
   }
 
@@ -221,32 +216,33 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget _buildDrawerContributors() {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTitle("Contributors"),
-          SizedBox(height: 20),
-          _project != null && _project.contributorIds.length > 0
-          ? FutureBuilder(
-              future: GithubApiClient().getUsersByIDs(this._project.contributorIds),
-              builder: _buildContributorsListView,
-            )
-          : Container()
-        ]
-      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        _buildTitle('Contributors'),
+        SizedBox(height: 20),
+        _project != null && _project.contributorIds.isNotEmpty
+            ? FutureBuilder(
+                future:
+                    GithubApiClient().getUsersByIDs(_project.contributorIds),
+                builder: (BuildContext context, snapshot) =>
+                    _buildContributorsListView(snapshot.data),
+              )
+            : Container()
+      ]),
     );
   }
-  
-  Widget _buildContributorsListView(BuildContext context,  AsyncSnapshot<List<GithubUser>> snapshot) {
-    if (snapshot.data == null)
-      return Center(child: CupertinoActivityIndicator());
+
+  Widget _buildContributorsListView(List<GithubUser> users) {
+    if (users == null) {
+      return Center(
+        child: CupertinoActivityIndicator(),
+      );
+    }
 
     return Column(
-      children: List<Widget>
-        .generate(
-          snapshot.data.length, 
-          (index) => _buildWidgetContributionsItem(snapshot.data[index])
-        ).separated(SizedBox(height: 20))
+      children: List<Widget>.generate(
+        users.length,
+        (index) => _buildWidgetContributionsItem(users[index]),
+      ).separated(SizedBox(height: 20)),
     );
   }
 
@@ -293,16 +289,16 @@ class _ProjectPageState extends State<ProjectPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitle("Properties"),
+          _buildTitle('Properties'),
           _buildTitleForWidget(
-            title: "width",
+            title: 'width',
             widget: Text(
               _project.initialSize.width.toString(),
               style: Theme.of(context).textTheme.subtitle2,
             ),
           ),
           _buildTitleForWidget(
-            title: "height",
+            title: 'height',
             widget: Text(
               _project.initialSize.height.toString(),
               style: Theme.of(context).textTheme.subtitle2,

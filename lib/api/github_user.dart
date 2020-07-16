@@ -18,11 +18,11 @@ class GithubUser {
 
   factory GithubUser.fromJson(Map<String, dynamic> json) {
     return GithubUser(
-      id: json["id"],
-      nickname: json["login"],
-      name: json["name"],
-      avatar: Uri.parse(json["avatar_url"]),
-      url: Uri.parse(json["html_url"]),
+      id: json['id'],
+      nickname: json['login'],
+      name: json['name'],
+      avatar: Uri.parse(json['avatar_url']),
+      url: Uri.parse(json['html_url']),
     );
   }
 }

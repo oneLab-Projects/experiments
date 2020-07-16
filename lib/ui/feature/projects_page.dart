@@ -25,12 +25,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("oneLab Experiments"),
+        title: Text('oneLab Experiments'),
         actions: [
           IconButton(
             icon: Icon(MdiIcons.github),
             onPressed: () async =>
-                await launch("https://github.com/oneLab-Projects/experiments"),
+                await launch('https://github.com/oneLab-Projects/experiments'),
           ),
           IconButton(
             icon: Icon(MdiIcons.whiteBalanceSunny),

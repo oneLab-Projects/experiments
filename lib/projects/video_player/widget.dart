@@ -42,8 +42,8 @@ class _VideoPlayerState extends State<VideoPlayer> {
   Widget build(BuildContext context) {
     Widget progressIndicator;
     if (_controller.value.initialized) {
-      final int duration = _controller.value.duration.inMicroseconds;
-      final int position = _controller.value.position.inMicroseconds;
+      final duration = _controller.value.duration.inMicroseconds;
+      final position = _controller.value.position.inMicroseconds;
 
       progressIndicator = CircularPercentIndicator(
         animation: true,
@@ -136,9 +136,10 @@ class _VideoPlayerState extends State<VideoPlayer> {
 
   void _toggleVideoPlayer() {
     setState(() => _played = !_played);
-    if (_played)
+    if (_played) {
       _controller.play();
-    else
+    } else {
       _controller.pause();
+    }
   }
 }
