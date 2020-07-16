@@ -11,7 +11,7 @@ class Routes {
   static const String PROJECTS_2 = '/project';
   static const String PROJECT = '/project/:id';
 
-  static String projectWithId(int id) => "/project/$id";
+  static String projectWithId(int id) => '/project/$id';
 
   static final router = Router({
     WELCOME: (BuildContext context, parameters) => WelcomePage(),

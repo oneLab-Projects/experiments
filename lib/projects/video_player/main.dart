@@ -8,12 +8,12 @@ class VideoPlayerProject implements Project {
   int id = 1;
 
   @override
-  String name = "Video Player";
+  String name = 'Video Player';
 
   @override
   String description =
-      "This is a simple player for playing videos, with the ability"
-      " to control the playback status and track progress.";
+      'This is a simple player for playing videos, with the ability'
+      ' to control the playback status and track progress.';
 
   @override
   List<int> contributorIds = [25152332];
@@ -27,7 +27,7 @@ class VideoPlayerProject implements Project {
   @override
   Widget source = VideoPlayer(
     url:
-        "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
   );
 
   @override

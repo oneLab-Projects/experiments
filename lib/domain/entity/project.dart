@@ -8,7 +8,8 @@ class InitialSize {
   final double height;
   InitialSize(this.width, this.height);
 
-  String toString() => "{width: $width, height: $height}";
+  @override
+  String toString() => '{width: $width, height: $height}';
 }
 
 abstract class Project {

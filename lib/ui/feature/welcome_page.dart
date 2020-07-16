@@ -24,7 +24,7 @@ class WelcomePage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "oneLab Experiments",
+                  'oneLab Experiments',
                   textAlign: TextAlign.center,
                   style: MediaQuery.of(context).size.width > 700
                       ? Theme.of(context).textTheme.headline3
@@ -45,7 +45,7 @@ class WelcomePage extends StatelessWidget {
       children: [
         RaisedButton.icon(
           label: Text(
-            "Explore",
+            'Explore',
             style: Theme.of(context)
                 .textTheme
                 .button
@@ -60,10 +60,10 @@ class WelcomePage extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed(Routes.PROJECTS),
         ),
         OutlineButton.icon(
-          label: Text("Open in GitHub"),
+          label: Text('Open in GitHub'),
           icon: Icon(MdiIcons.github, size: 16),
           onPressed: () async =>
-              await launch("https://github.com/oneLab-Projects/experiments"),
+              await launch('https://github.com/oneLab-Projects/experiments'),
         ),
       ].separated(SizedBox(width: 10)),
     );
