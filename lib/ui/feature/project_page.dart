@@ -229,7 +229,7 @@ class _ProjectPageState extends State<ProjectPage> {
           _project != null && _project.contributorIds.length > 0
           ? FutureBuilder(
               future: GithubApiClient().getUsersByIDs(this._project.contributorIds),
-              builder: _buildContributorsListView,
+              builder: _buildContributorsList,
             )
           : Container()
         ]
@@ -237,9 +237,11 @@ class _ProjectPageState extends State<ProjectPage> {
     );
   }
   
-  Widget _buildContributorsListView(BuildContext context,  AsyncSnapshot<List<GithubUser>> snapshot) {
+  Widget _buildContributorsList(BuildContext context,  AsyncSnapshot<List<GithubUser>> snapshot) {
     if (snapshot.data == null)
-      return Center(child: CupertinoActivityIndicator());
+      return Center(
+        child: CupertinoActivityIndicator()
+      );
 
     return Column(
       children: List<Widget>
@@ -267,19 +269,20 @@ class _ProjectPageState extends State<ProjectPage> {
             Text(
               contributor.name ?? contributor.nickname,
               style: Theme.of(context).textTheme.bodyText1.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                fontWeight: FontWeight.w700,
+              ),
             ),
             if (contributor.name != null)
               Text(
                 contributor.nickname,
                 style: Theme.of(context).textTheme.bodyText1.copyWith(
-                    color: Theme.of(context)
-                        .textTheme
-                        .bodyText2
-                        .color
-                        .withAlpha(150),
-                    fontSize: 12),
+                  color: Theme.of(context)
+                    .textTheme
+                    .bodyText2
+                    .color
+                    .withAlpha(150),
+                  fontSize: 12
+                ),
               ),
           ].separated(SizedBox(height: 5)),
         ),
@@ -337,8 +340,8 @@ class _ProjectPageState extends State<ProjectPage> {
         Text(
           title,
           style: Theme.of(context).textTheme.subtitle2.copyWith(
-              color:
-                  Theme.of(context).textTheme.subtitle2.color.withAlpha(150)),
+            color: Theme.of(context).textTheme.subtitle2.color.withAlpha(150)
+          ),
         ),
         widget,
       ].separated(SizedBox(height: 7)),
