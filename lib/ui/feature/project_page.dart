@@ -19,7 +19,6 @@ class _ProjectPageState extends State<ProjectPage> {
   TransformationController _transformationController;
 
   Project _project;
-  List<GithubUser> _contributors;
   bool _showDrawer = false;
 
   @override
@@ -31,19 +30,12 @@ class _ProjectPageState extends State<ProjectPage> {
       (element) => element.id == widget.id,
       orElse: () => null,
     );
-
-    if (_project != null && _project.contributorIds.length > 0) {
-      GithubApiClient()
-          .getUsersByIDs(
-            _project.contributorIds,
-          )
-          .then((value) => setState(() => _contributors = value));
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_project == null) return NotFoundPage();
+    if (_project == null) 
+      return NotFoundPage();
 
     switch (_project.type) {
       case ProjectType.widget:
@@ -55,7 +47,7 @@ class _ProjectPageState extends State<ProjectPage> {
         return _project.source;
     }
 
-    return null;
+    return NotFoundPage();
   }
 
   Widget _buildWidgetView() {
@@ -92,10 +84,10 @@ class _ProjectPageState extends State<ProjectPage> {
               duration: Duration(milliseconds: 200),
               curve: Curves.ease,
               height: _showDrawer
-                  ? MediaQuery.of(context).size.height / 3 > 400
-                      ? 400
-                      : MediaQuery.of(context).size.height / 3
-                  : 0,
+                ? MediaQuery.of(context).size.height / 3 > 400
+                  ? 400
+                  : MediaQuery.of(context).size.height / 3
+                : 0,
               child: _buildDrawer(),
             ),
           Expanded(
@@ -136,16 +128,16 @@ class _ProjectPageState extends State<ProjectPage> {
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         border: MediaQuery.of(context).size.width < 1000
-            ? Border(
-                bottom: BorderSide(
-                  color: Theme.of(context).dividerColor,
-                ),
-              )
-            : Border(
-                right: BorderSide(
-                  color: Theme.of(context).dividerColor,
-                ),
+          ? Border(
+              bottom: BorderSide(
+                color: Theme.of(context).dividerColor,
               ),
+            )
+          : Border(
+              right: BorderSide(
+                color: Theme.of(context).dividerColor,
+              ),
+            ),
       ),
       width: MediaQuery.of(context).size.width < 1000 ? double.infinity : 300,
       height: MediaQuery.of(context).size.width < 1000 ? null : double.infinity,
@@ -188,9 +180,9 @@ class _ProjectPageState extends State<ProjectPage> {
     return Text(
       _project.name,
       style: Theme.of(context).textTheme.headline6.copyWith(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 
@@ -198,8 +190,9 @@ class _ProjectPageState extends State<ProjectPage> {
     return Text(
       _project.description ?? "No description",
       style: Theme.of(context).textTheme.subtitle2.copyWith(
-          color: Theme.of(context).textTheme.subtitle2.color.withAlpha(150),
-          height: 1.6),
+        color: Theme.of(context).textTheme.subtitle2.color.withAlpha(150),
+        height: 1.6
+      ),
     );
   }
 
@@ -231,21 +224,29 @@ class _ProjectPageState extends State<ProjectPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-              _buildTitle("Contributors"),
-              SizedBox(height: 20),
-            ] +
-            (_contributors != null
-                ? List<Widget>.generate(
-                    _contributors.length,
-                    (index) {
-                      final contributor = _contributors[index];
-                      return _buildWidgetContributionsItem(contributor);
-                    },
-                  ).separated(SizedBox(height: 20))
-                : [
-                    Center(child: CupertinoActivityIndicator()),
-                  ]),
+          _buildTitle("Contributors"),
+          SizedBox(height: 20),
+          _project != null && _project.contributorIds.length > 0
+          ? FutureBuilder(
+              future: GithubApiClient().getUsersByIDs(this._project.contributorIds),
+              builder: _buildContributorsListView,
+            )
+          : Container()
+        ]
       ),
+    );
+  }
+  
+  Widget _buildContributorsListView(BuildContext context,  AsyncSnapshot<List<GithubUser>> snapshot) {
+    if (snapshot.data == null)
+      return Center(child: CupertinoActivityIndicator());
+
+    return Column(
+      children: List<Widget>
+        .generate(
+          snapshot.data.length, 
+          (index) => _buildWidgetContributionsItem(snapshot.data[index])
+        ).separated(SizedBox(height: 20))
     );
   }
 
