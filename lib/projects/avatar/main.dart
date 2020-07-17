@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart' show Widget;
 import 'package:onelab_experiments/domain/entity/project.dart';
 
@@ -25,7 +27,8 @@ class AvatarProject implements Project {
 
   @override
   Widget source = Avatar(
-    url: 'https://avatars0.githubusercontent.com/u/25152332?s=460&v=4',
+    url: 'https://identicon-api.herokuapp.com/'
+        '${Random().nextInt(1000)}/1024?format=png',
   );
 
   @override

@@ -18,19 +18,20 @@ class _AvatarState extends State<Avatar> {
     return ClipOval(
       child: Stack(
         children: <Widget>[
+          Container(color: Colors.white),
           Container(color: Colors.black12),
-          FadeInImage.memoryNetwork(
-            fadeInDuration: Duration(milliseconds: 150),
-            placeholder: kTransparentImage,
-            image: widget.url,
+          Padding(
+            padding: const EdgeInsets.all(2),
+            child: FadeInImage.memoryNetwork(
+              fadeInDuration: Duration(milliseconds: 150),
+              placeholder: kTransparentImage,
+              image: widget.url,
+            ),
           ),
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(
-                width: 2,
-                color: Colors.black38,
-              ),
+              border: Border.all(width: 2, color: Colors.grey),
             ),
           ),
         ],
