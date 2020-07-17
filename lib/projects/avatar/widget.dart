@@ -14,11 +14,6 @@ class Avatar extends StatefulWidget {
 
 class _AvatarState extends State<Avatar> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ClipOval(
       child: Stack(
