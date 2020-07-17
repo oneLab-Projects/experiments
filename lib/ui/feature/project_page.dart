@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:onelab_experiments/api/github_api.dart';
-import 'package:onelab_experiments/api/github_user.dart';
+import 'package:onelab_experiments/component/api/github_api.dart';
+import 'package:onelab_experiments/component/api/github_user.dart';
 import 'package:onelab_experiments/domain/entity/project.dart';
 import 'package:onelab_experiments/projects/projects.dart';
 import 'package:onelab_experiments/ui/feature/not_found_page.dart';
@@ -263,20 +263,19 @@ class _ProjectPageState extends State<ProjectPage> {
             Text(
               contributor.name ?? contributor.nickname,
               style: Theme.of(context).textTheme.bodyText1.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+                    fontWeight: FontWeight.w700,
+                  ),
             ),
             if (contributor.name != null)
               Text(
                 contributor.nickname,
                 style: Theme.of(context).textTheme.bodyText1.copyWith(
-                  color: Theme.of(context)
-                    .textTheme
-                    .bodyText2
-                    .color
-                    .withAlpha(150),
-                  fontSize: 12
-                ),
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        .color
+                        .withAlpha(150),
+                    fontSize: 12),
               ),
           ].separated(SizedBox(height: 5)),
         ),
@@ -334,8 +333,8 @@ class _ProjectPageState extends State<ProjectPage> {
         Text(
           title,
           style: Theme.of(context).textTheme.subtitle2.copyWith(
-            color: Theme.of(context).textTheme.subtitle2.color.withAlpha(150)
-          ),
+              color:
+                  Theme.of(context).textTheme.subtitle2.color.withAlpha(150)),
         ),
         widget,
       ].separated(SizedBox(height: 7)),
