@@ -26,10 +26,10 @@ class _AvatarState extends State<Avatar> {
           ),
           Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25.0),
+              shape: BoxShape.circle,
               border: Border.all(
                 width: 2,
-                color: Colors.grey,
+                color: Colors.black38,
               ),
             ),
           ),
