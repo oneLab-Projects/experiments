@@ -19,7 +19,7 @@ class AppTheme {
     buttonColor: Colors.grey[800],
     dividerColor: Color(0x10000000),
     chipTheme: ChipThemeData(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       brightness: Brightness.light,
       disabledColor: Colors.red,
       labelStyle: TextStyle(
