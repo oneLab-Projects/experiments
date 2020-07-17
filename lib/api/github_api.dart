@@ -1,6 +1,5 @@
 import 'dart:convert';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' show HttpStatus;
+import 'dart:io' show HttpStatus;
 import 'package:onelab_experiments/api/github_user.dart';
 import 'api_client.dart';
 import 'package:http/http.dart' as http;
