@@ -12,6 +12,7 @@ dependencies:
   rest_router: ^0.1.0
   video_player: ^0.10.11+2
   http: ^0.12.1
+  transparent_image: ^1.0.0
 
   # ui
   pansy_ui:
