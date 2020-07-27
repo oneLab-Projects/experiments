@@ -14,7 +14,7 @@ class ProjectCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       clipBehavior: Clip.antiAlias,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(15),
       child: InkWell(
         onTap: () =>
             Navigator.of(context).pushNamed(Routes.projectWithId(project.id)),
