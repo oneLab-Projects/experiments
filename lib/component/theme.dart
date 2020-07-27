@@ -3,6 +3,7 @@ import 'package:pansy_ui/pansy_ui.dart';
 class AppTheme {
   static ThemeData dayTheme = ThemeData(
     brightness: Brightness.light,
+    accentColor: Colors.grey[800],
     sliderTheme: SliderThemeData(
       activeTrackColor: Colors.grey[900],
       inactiveTrackColor: Colors.grey[400],
@@ -41,6 +42,7 @@ class AppTheme {
 
   static ThemeData nightTheme = ThemeData(
     brightness: Brightness.dark,
+    accentColor: Colors.grey[850],
     primaryColor: Colors.grey[850],
     canvasColor: Colors.grey[850],
     scaffoldBackgroundColor: Colors.grey[900],
