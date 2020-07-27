@@ -22,6 +22,24 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.14.13"
+  flare_dart:
+    dependency: transitive
+    description:
+      path: flare_dart
+      ref: dev
+      resolved-ref: "64510c5723c8fafdd83dde9b88468bc78b2a5b47"
+      url: "git://github.com/2d-inc/Flare-Flutter.git"
+    source: git
+    version: "2.3.3"
+  flare_flutter:
+    dependency: "direct main"
+    description:
+      path: flare_flutter
+      ref: dev
+      resolved-ref: "64510c5723c8fafdd83dde9b88468bc78b2a5b47"
+      url: "git://github.com/2d-inc/Flare-Flutter.git"
+    source: git
+    version: "2.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -45,7 +63,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.1"
+    version: "0.12.2"
   http_parser:
     dependency: transitive
     description:
@@ -72,7 +90,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e2e208b1b9adebb52eb894a4011dc073cb5c39c6
+      resolved-ref: "10e1c5ae21a1168ddc258f5413d2a201e64a51d1"
       url: "git://github.com/oneLab-Projects/pansy_ui.git"
     source: git
     version: "0.0.2"

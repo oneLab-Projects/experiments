@@ -21,5 +21,15 @@ dependencies:
   material_design_icons_flutter: ^4.0.5345
   percent_indicator: ^2.1.5
 
+  # design
+  flare_flutter:
+    git:
+      url: git://github.com/2d-inc/Flare-Flutter.git
+      ref: dev
+      path: flare_flutter
+
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/flare/
