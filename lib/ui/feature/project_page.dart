@@ -62,6 +62,7 @@ class _ProjectPageState extends State<ProjectPage> {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
+      extendBodyBehindStatusBar: true,
       appBar: AppBar(
         title: Text('Project'),
         actions: [
@@ -128,16 +129,13 @@ class _ProjectPageState extends State<ProjectPage> {
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         border: MediaQuery.of(context).size.width < 1000
-            ? Border(
-                bottom: BorderSide(color: Theme.of(context).dividerColor),
-              )
-            : Border(
-                right: BorderSide(color: Theme.of(context).dividerColor),
-              ),
+            ? Border(bottom: BorderSide(color: Theme.of(context).dividerColor))
+            : Border(right: BorderSide(color: Theme.of(context).dividerColor)),
       ),
       width: MediaQuery.of(context).size.width < 1000 ? double.infinity : 300,
       height: MediaQuery.of(context).size.width < 1000 ? null : double.infinity,
-      padding: EdgeInsets.only(top: APPBAR_HEIGHT),
+      padding: EdgeInsets.only(
+          top: APPBAR_HEIGHT + MediaQuery.of(context).padding.top),
       child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 15),
