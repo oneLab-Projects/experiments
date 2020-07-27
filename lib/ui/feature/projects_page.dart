@@ -1,7 +1,7 @@
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:onelab_experiments/domain/entity/project.dart';
 import 'package:onelab_experiments/projects/projects.dart';
-import 'package:onelab_experiments/ui/widget/widgets.dart';
+import 'package:onelab_experiments/ui/widget/widgets.dart' as experimental;
 import 'package:pansy_ui/pansy_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -52,7 +52,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
         projects.length,
         (index) {
           var project = projects[index];
-          return ProjectCard(project: project);
+          return experimental.ProjectCard(project: project);
         },
       ),
     );
