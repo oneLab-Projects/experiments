@@ -1,8 +1,10 @@
 import 'dart:math';
 
-import 'package:flutter/widgets.dart' show Widget;
+import 'package:flutter/widgets.dart';
 import 'package:onelab_experiments/domain/entity/project.dart';
+import 'package:onelab_experiments/domain/interface/properties.dart';
 
+import 'properties.dart';
 import 'widget.dart';
 
 class AvatarProject implements Project {
@@ -32,5 +34,5 @@ class AvatarProject implements Project {
   );
 
   @override
-  InitialSize initialSize = InitialSize(50, 50);
+  Properties properties = AvatarProperties();
 }

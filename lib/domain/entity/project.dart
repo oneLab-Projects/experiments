@@ -1,16 +1,8 @@
-import 'package:flutter/widgets.dart' show Widget;
+import 'package:onelab_experiments/domain/interface/properties.dart';
+import 'package:flutter/widgets.dart';
 
 enum ProjectType { widget, full, app }
 enum DevelopmentStatus { none, dev, beta, stable }
-
-class InitialSize {
-  final double width;
-  final double height;
-  InitialSize(this.width, this.height);
-
-  @override
-  String toString() => '{width: $width, height: $height}';
-}
 
 abstract class Project {
   int id;
@@ -20,5 +12,5 @@ abstract class Project {
   ProjectType type;
   DevelopmentStatus developmentStatus;
   Widget source;
-  InitialSize initialSize;
+  Properties properties;
 }

@@ -5,7 +5,9 @@ import 'package:onelab_experiments/component/api/github_user.dart';
 import 'package:onelab_experiments/domain/entity/project.dart';
 import 'package:onelab_experiments/projects/projects.dart';
 import 'package:onelab_experiments/ui/feature/not_found_page.dart';
+import 'package:onelab_experiments/ui/global/projects/properties_changer.dart';
 import 'package:pansy_ui/pansy_ui.dart';
+import 'package:provider/provider.dart';
 
 class ProjectPage extends StatefulWidget {
   final int id;
@@ -52,56 +54,51 @@ class _ProjectPageState extends State<ProjectPage> {
   Widget _buildWidgetView() {
     var source = _project.source;
 
-    if (_project.initialSize != null) {
-      source = SizedBox(
-        width: _project.initialSize.width,
-        height: _project.initialSize.height,
-        child: _project.source,
-      );
-    }
-
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      extendBodyBehindStatusBar: true,
-      appBar: AppBar(
-        title: Text('Project'),
-        actions: [
-          if (MediaQuery.of(context).size.width < 1000)
+    return ChangeNotifierProvider(
+      create: (context) => PropertiesChanger(_project.properties),
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBodyBehindStatusBar: true,
+        appBar: AppBar(
+          title: Text('Project'),
+          actions: [
+            if (MediaQuery.of(context).size.width < 1000)
+              IconButton(
+                icon: Icon(MdiIcons.textBox),
+                onPressed: () => _toggleDrawer(),
+              ),
             IconButton(
-              icon: Icon(MdiIcons.textBox),
-              onPressed: () => _toggleDrawer(),
+              icon: Icon(MdiIcons.whiteBalanceSunny),
+              onPressed: () => ThemeProvider.of(context).toggleThemeMode(),
             ),
-          IconButton(
-            icon: Icon(MdiIcons.whiteBalanceSunny),
-            onPressed: () => ThemeProvider.of(context).toggleThemeMode(),
-          ),
-        ].separated(SizedBox(width: 2)),
-      ),
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (MediaQuery.of(context).size.width < 1000)
-            AnimatedContainer(
-              duration: Duration(milliseconds: 200),
-              curve: Curves.ease,
-              height: _showDrawer
-                  ? MediaQuery.of(context).size.height / 3 > 400
-                      ? 400
-                      : MediaQuery.of(context).size.height / 3
-                  : 0,
-              child: _buildDrawer(),
+          ].separated(SizedBox(width: 2)),
+        ),
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (MediaQuery.of(context).size.width < 1000)
+              AnimatedContainer(
+                duration: Duration(milliseconds: 200),
+                curve: Curves.ease,
+                height: _showDrawer
+                    ? MediaQuery.of(context).size.height / 3 > 400
+                        ? 400
+                        : MediaQuery.of(context).size.height / 3
+                    : 0,
+                child: _buildDrawer(),
+              ),
+            Expanded(
+              child: Row(
+                children: [
+                  if (MediaQuery.of(context).size.width >= 1000) _buildDrawer(),
+                  Expanded(
+                    child: _buildWidgetViewer(source),
+                  ),
+                ],
+              ),
             ),
-          Expanded(
-            child: Row(
-              children: [
-                if (MediaQuery.of(context).size.width >= 1000) _buildDrawer(),
-                Expanded(
-                  child: _buildWidgetViewer(source),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -282,29 +279,19 @@ class _ProjectPageState extends State<ProjectPage> {
   }
 
   Widget _buildDrawerProperties() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTitle('Properties'),
-          _buildTitleForWidget(
-            title: 'width',
-            widget: Text(
-              _project.initialSize.width.toString(),
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
-          ),
-          _buildTitleForWidget(
-            title: 'height',
-            widget: Text(
-              _project.initialSize.height.toString(),
-              style: Theme.of(context).textTheme.subtitle2,
-            ),
-          ),
-        ].separated(SizedBox(height: 15)),
-      ),
-    );
+    return Builder(builder: (context) {
+      return Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+                _buildTitle('Properties'),
+                SizedBox(height: 15),
+              ] +
+              _project.properties.getWidgets(context),
+        ),
+      );
+    });
   }
 
   Widget _buildTitle(String title) {
