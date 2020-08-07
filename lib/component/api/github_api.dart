@@ -7,7 +7,6 @@ import 'api_client.dart';
 import 'github_user.dart';
 
 class GithubApiClient extends ApiClient {
-  
   Future<GithubUser> getUserByID(int id) async {
     final result = await http.get('https://api.github.com/user/$id');
     assert(result.statusCode == HttpStatus.ok);
@@ -22,5 +21,4 @@ class GithubApiClient extends ApiClient {
       ids.map(getUserByID),
     );
   }
-  
 }
