@@ -5,6 +5,7 @@ class GithubUser {
 
   final String nickname;
   final String name;
+  
   final Uri avatar;
   final Uri url;
 
